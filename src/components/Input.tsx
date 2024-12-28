@@ -7,7 +7,8 @@ type InputProps = {
 };
 
 const Input = ({ name, children }: InputProps) => {
-  const { register } = useFormContext();
+  const { register, formState, getFieldState } = useFormContext();
+  const { error } = getFieldState(name, formState);
   return (
     <div className="mb-3">
       <label htmlFor={name} className="form-label">
@@ -19,6 +20,7 @@ const Input = ({ name, children }: InputProps) => {
         className="form-control"
         id={name}
       />
+      {error?.message && <p className="text-danger">{error.message}</p>}
     </div>
   );
 };

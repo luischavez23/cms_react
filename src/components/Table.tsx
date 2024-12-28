@@ -1,11 +1,15 @@
-type Props = {};
+import { Contact } from "../schemas/Contact";
 
-const Table = (props: Props) => {
+type TableProps = {
+  contacts: Contact[];
+  onClick: (id: string) => void;
+};
+
+const Table = ({ contacts, onClick }: TableProps) => {
   return (
-    <table className="table mt-5 border">
+    <table className="table table-striped table-hover mt-5 border">
       <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Last name</th>
           <th scope="col">Email</th>
@@ -13,13 +17,18 @@ const Table = (props: Props) => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>Family</td>
-        </tr>
+        {contacts.map((item) => (
+          <tr
+            key={item.id}
+            onClick={() => onClick(item.id)}
+            style={{ cursor: "pointer" }}
+          >
+            <td>{item.name}</td>
+            <td>{item.lastname}</td>
+            <td>{item.email}</td>
+            <td>{item.groupContact}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

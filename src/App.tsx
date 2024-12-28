@@ -1,14 +1,10 @@
-import Forms from "./components/Forms";
-import Table from "./components/Table";
+import CMS from "./components/CMS";
 
 function App() {
   return (
-    <>
-      <div className="container mt-5">
-        <Forms />
-        <Table />
-      </div>
-    </>
+    <div className="container mt-5">
+      <CMS />
+    </div>
   );
 }
 

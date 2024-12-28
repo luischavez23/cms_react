@@ -1,20 +1,35 @@
 import { FormProvider, useForm } from "react-hook-form";
 import Input from "./Input";
 import Button from "./Button";
-type Props = {};
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Contact, groupContact } from "../schemas/Contact";
+import Select from "./Select";
 
-const Forms = ({}: Props) => {
-  const methods = useForm();
+type FormProps = {
+  handleContact: (contact: Contact) => void;
+};
+
+const Forms = ({ handleContact }: FormProps) => {
+  const methods = useForm<Contact>({
+    resolver: zodResolver(Contact),
+  });
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit((data) => console.log(data))}>
+      <form onSubmit={methods.handleSubmit(handleContact)}>
         <Input name="name">Name</Input>
         <Input name="lastname">Last name</Input>
         <Input name="email">Email</Input>
+        <Select
+          name="groupContact"
+          options={groupContact}
+          defaultMessage="--Select an option--"
+        />
         <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-          <Button>Send</Button>
-          <Button variant="secondary">Clear</Button>
+          <Button typeButton="submit">Send</Button>
+          <Button onClick={() => methods.reset()} variant="secondary">
+            Clear
+          </Button>
         </div>
       </form>
     </FormProvider>
